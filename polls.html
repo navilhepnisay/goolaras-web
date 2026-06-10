@@ -1193,8 +1193,6 @@
       margin-top: 16px;
       font-size: 14px;
       font-weight: 500;
-      line-height: 1.55;
-      white-space: pre-line;
       display: none;
     }
     .ballot-feedback.success {
@@ -1720,12 +1718,12 @@
 
           <label class="ballot-consent-row" for="ballotConsent">
             <input type="checkbox" id="ballotConsent" class="ballot-checkbox">
-            <span class="ballot-consent-text" data-i18n="consent_text">I agree to receive occasional Goolaras and World Cup 2026 updates. No spam — only relevant updates and supporter video alerts.</span>
+            <span class="ballot-consent-text" data-i18n="consent_text">I want to receive World Cup 2026 news, daily Shorts alerts, and surprises from Goolaras.</span>
           </label>
 
           <button id="submitBallotBtn" class="btn-submit-ballot" onclick="submitBallot()" data-i18n="btn_submit_ballot">SUBMIT MY BALLOT</button>
           
-          <div id="ballotFeedback" class="ballot-feedback" role="status" aria-live="polite"></div>
+          <div id="ballotFeedback" class="ballot-feedback"></div>
         </div>
       </div>
     </div>
@@ -1769,28 +1767,8 @@
   <script>
 
     // Supabase Configuration
-    // Project: goolaras_votes / https://jtduooncnwfqpuywkkpd.supabase.co
-    // IMPORTANT: This is the public browser key. Never use a service_role key in HTML.
     const SUPABASE_URL = "https://jtduooncnwfqpuywkkpd.supabase.co";
-    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_KK97PmpDE0lrFBK3RxAmIA_rPk5A8L4";
-    const SUPABASE_TABLE = "goolaras_votes";
-
-    const supabaseClient = window.supabase
-      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
-          auth: {
-            persistSession: false,
-            autoRefreshToken: false,
-            detectSessionInUrl: false
-          }
-        })
-      : null;
-
-    function getSupabaseErrorMessage(err) {
-      if (!err) return "Unknown Supabase error.";
-      const details = [err.message, err.details, err.hint, err.code].filter(Boolean).join(" | ");
-      return details || String(err);
-    }
-
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0ZHVvb25jbndmcXB1eXdra3BkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwNjMzNjAsImV4cCI6MjA5NjYzOTM2MH0.W1-UUjIYnngKmBBR0QKe1FwNIwugS6Usc7-PmKg2W7o";
 
     // Translation dictionary for 7 languages
     const i18n = {
@@ -1826,11 +1804,11 @@
         summary_none: "None",
         email_label: "Email Address",
         email_placeholder: "Enter your email...",
-        consent_text: "I agree to receive occasional Goolaras and World Cup 2026 updates. No spam — only relevant updates and supporter video alerts.",
+        consent_text: "I want to receive World Cup 2026 news, daily Shorts alerts, and surprises from Goolaras.",
         btn_submit_ballot: "SUBMIT MY BALLOT",
         invalid_email_error: "Please enter a valid email address!",
         consent_error: "You must check the consent box to submit!",
-        submission_success: "Thank you for joining! Your vote has been recorded. No spam — we’ll only email you about Goolaras and World Cup 2026 updates, supporter reveal videos, and important announcements. 🏆",
+        submission_success: "Thank you! Your official ballot has been recorded. Goolaras Shorts alerts are locked in!",
         submission_error: "Submission failed. Please try again!",
         join_chaos_title: "Join The Football <span>Chaos</span>",
         join_chaos_desc: "We are releasing daily World Cup 2026 shorts, unforgettable match moments, parody stories, and iconic supporter reveals for all 48 countries. Go ahead and follow our main playground on YouTube.",
@@ -1883,11 +1861,11 @@
         summary_none: "Yok",
         email_label: "E-Posta Adresi",
         email_placeholder: "E-postanızı girin...",
-        consent_text: "Goolaras ve World Cup 2026 güncellemelerini almak için onay veriyorum. Spam yapılmayacağını, yalnızca ilgili güncellemelerin paylaşılacağını biliyorum.",
+        consent_text: "Dünya Kupası 2026 haberlerini, günlük Shorts bildirimlerini ve Goolaras sürprizlerini almak istiyorum.",
         btn_submit_ballot: "OYUMU GÖNDER",
         invalid_email_error: "Lütfen geçerli bir e-posta adresi girin!",
         consent_error: "Göndermek için onay kutusunu işaretlemelisiniz!",
-        submission_success: "Katılımınız için teşekkürler! Oyunuz başarıyla kaydedildi. Spam yapmayacağız; e-postanızı yalnızca Goolaras ve World Cup 2026 güncellemeleri, taraftar videoları ve önemli duyurular için kullanacağız. 🏆",
+        submission_success: "Teşekkürler! Resmi oyunuz kaydedildi. Goolaras bildirimleri kilitlendi!",
         submission_error: "Gönderim başarısız oldu. Lütfen tekrar deneyin!",
         join_chaos_title: "Futbol Kaosuna Katıl",
         join_chaos_desc: 'Her gün 48 ülkeye özel Dünya Kupası 2026 shorts videoları, unutulmaz anlar, parodi hikayeler ve efsane taraftar gösterileri paylaşıyoruz! Eğlenceyi kaçırma.',
@@ -1944,7 +1922,7 @@
         btn_submit_ballot: "ENVIAR MI VOTO",
         invalid_email_error: "¡Por favor, introduce un correo electrónico válido!",
         consent_error: "¡Debes marcar la casilla de consentimiento para enviar!",
-        submission_success: "¡Gracias por participar! Tu voto se ha registrado correctamente. No enviaremos spam; solo compartiremos actualizaciones de Goolaras y World Cup 2026, videos de hinchas y anuncios importantes. 🏆",
+        submission_success: "¡Gracias! Tu voto oficial ha sido registrado con éxito. ¡Prepárate para los shorts!",
         submission_error: "¡El envío falló. Por favor, inténtalo de nuevo!",
         join_chaos_title: "Únete al Caos del Fútbol",
         join_chaos_desc: "¡Publicamos shorts diarios de la Copa Mundial 2026, momentos inolvidables, historias de parodia y revelaciones de seguidores icónicos para los 48 países! No te lo pierdas.",
@@ -2001,7 +1979,7 @@
         btn_submit_ballot: "STIMMZETTEL ABSENDEN",
         invalid_email_error: "Bitte geben Sie eine gültige E-Mail-Adresse ein!",
         consent_error: "Sie müssen dem Erhalt zustimmen, um abzusenden!",
-        submission_success: "Danke für deine Teilnahme! Deine Stimme wurde erfolgreich gespeichert. Kein Spam — wir senden dir nur Goolaras- und World-Cup-2026-Updates, Fan-Videos und wichtige Ankündigungen. 🏆",
+        submission_success: "Danke! Ihr Stimmzettel wurde erfolgreich registriert. Machen Sie sich bereit!",
         submission_error: "Fehler beim Absenden. Bitte versuchen Sie es erneut!",
         join_chaos_title: "Tauche ein ins Fußball-Chaos",
         join_chaos_desc: "Wir veröffentlichen täglich WM-Shorts 2026, unvergessliche Spielmomente, Parodien und Fan-Enthüllungen für alle 48 Länder! Verpasse nicht den Spaß und die Schönheit.",
@@ -2058,7 +2036,7 @@
         btn_submit_ballot: "إرسال صوتي",
         invalid_email_error: "يرجى إدخال عنوان بريد إلكتروني صالح!",
         consent_error: "يجب الموافقة على الشروط للإرسال!",
-        submission_success: "شكراً لمشاركتك! تم تسجيل صوتك بنجاح. لن نرسل رسائل مزعجة؛ سنشارك فقط تحديثات Goolaras وكأس العالم 2026 وفيديوهات المشجعين والإعلانات المهمة. 🏆",
+        submission_success: "شكراً لك! تم تسجيل خياراتك الرسمية بنجاح. ترقب الفيديوهات القصيرة!",
         submission_error: "فشل الإرسال. يرجى المحاولة مرة أخرى!",
         join_chaos_title: "انضم إلى فوضى كرة القدم",
         join_chaos_desc: "ننشر فيديوهات قصيرة يومية لكأس العالم 2026، ولحظات لا تُنسى للمباريات، وقصصاً ساخرة، وكشفاً عن مشجعي الدول الـ 48! لا تفوت المتعة والجمال.",
@@ -2115,7 +2093,7 @@
         btn_submit_ballot: "投票を送信する",
         invalid_email_error: "有効なメールアドレスを入力してください！",
         consent_error: "送信するには同意ボックスにチェックを入れてください！",
-        submission_success: "ご参加ありがとうございます！投票は正常に記録されました。スパムは送りません。GoolarasとWorld Cup 2026の最新情報、サポーター動画、重要なお知らせのみをお送りします。🏆",
+        submission_success: "ありがとうございます！公式投票が記録されました。Shorts公開をお楽しみに！",
         submission_error: "送信に失敗しました。もう一度お試しください！",
         join_chaos_title: "フットボールのカオスに参加しよう",
         join_chaos_desc: "毎日、ワールドカップ 2026のショート動画、忘れられない試合の瞬間、パロディストーリー、そして48ヶ国すべてのアイコニックなサポーター公開を配信しています！お見逃しなく。",
@@ -2172,7 +2150,7 @@
         btn_submit_ballot: "내 투표 제출하기",
         invalid_email_error: "유효한 이메일 주소를 입력하세요!",
         consent_error: "제출하려면 동의 상자에 체크해야 합니다!",
-        submission_success: "참여해 주셔서 감사합니다! 투표가 성공적으로 기록되었습니다. 스팸은 보내지 않습니다. Goolaras와 World Cup 2026 업데이트, 서포터 영상, 중요한 공지만 보내드리겠습니다. 🏆",
+        submission_success: "감사합니다! 귀하의 공식 투표지가 제출되었습니다. 채널 쇼츠 업데이트를 기다려 주세요!",
         submission_error: "제출 실패. 다시 시도해 주세요!",
         join_chaos_title: "축구 카오스에 동참하세요",
         join_chaos_desc: "우리는 매일 월드컵 2026 쇼츠, 잊지 못할 경기 장면, 패러디 스토리, 그리고 48개국 서포터들의 화려한 모습을 업로드합니다! 웃음과 아름다움을 놓치지 마세요.",
@@ -2707,15 +2685,14 @@
       submitBtn.innerText = lang === 'en' ? 'SUBMITTING...' : (lang === 'tr' ? 'GÖNDERİLİYOR...' : '...');
 
       // Build voting package
-      const favoriteId = activeFavoriteCountry || localStorage.getItem('predicted_champion') || 'not_selected';
-      const championId = localStorage.getItem('predicted_champion') || favoriteId || 'not_selected';
-      const groupVotes = activeGroupPicks || {};
+      const favoriteId = activeFavoriteCountry;
+      const groupVotes = activeGroupPicks;
 
       if (SUPABASE_URL.includes("YOUR_SUPABASE_URL") || !window.supabase) {
         setTimeout(() => {
           submitBtn.disabled = false;
           submitBtn.innerText = i18n[lang]?.btn_submit_ballot || "SUBMIT MY BALLOT";
-          feedback.innerText = i18n[lang]?.submission_success || "Thank you for joining! Your vote has been recorded. No spam — only relevant Goolaras updates.";
+          feedback.innerText = i18n[lang]?.submission_success || "Thank you for joining! Your vote has been recorded. No spam — only relevant Goolaras and World Cup 2026 updates.";
           feedback.className = 'ballot-feedback success';
           localStorage.setItem('ballot_submitted_email', email);
           
@@ -2727,18 +2704,18 @@
       }
 
       try {
-        if (!supabaseClient) {
-          throw new Error("Supabase client could not be loaded. Check the CDN script and internet connection.");
-        }
+        const { createClient } = window.supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         const { data, error } = await supabaseClient
-          .from(SUPABASE_TABLE)
+          .from('goolaras_votes')
           .insert([
             {
               email: email,
-              favorite_country: favoriteId,
-              predicted_champion: championId,
-              group_votes: groupVotes
+              favorite_team: favoriteId || 'not_selected',
+              favorite_country: favoriteId || 'not_selected',
+              group_votes: groupVotes,
+              newsletter_consent: true
             }
           ]);
 
@@ -2746,7 +2723,7 @@
 
         submitBtn.disabled = false;
         submitBtn.innerText = i18n[lang]?.btn_submit_ballot || "SUBMIT MY BALLOT";
-        feedback.innerText = i18n[lang]?.submission_success || "Thank you for joining! Your vote has been recorded. No spam — only relevant Goolaras updates.";
+        feedback.innerText = i18n[lang]?.submission_success || "Thank you for joining! Your vote has been recorded. No spam — only relevant Goolaras and World Cup 2026 updates.";
         feedback.className = 'ballot-feedback success';
         localStorage.setItem('ballot_submitted_email', email);
 
@@ -2758,7 +2735,7 @@
         console.error('Supabase error:', err);
         submitBtn.disabled = false;
         submitBtn.innerText = i18n[lang]?.btn_submit_ballot || "SUBMIT MY BALLOT";
-        feedback.innerText = `${i18n[lang]?.submission_error || "Submission failed. Please try again!"} (${getSupabaseErrorMessage(err)})`;
+        feedback.innerText = i18n[lang]?.submission_error || "Submission failed. Please try again!";
         feedback.className = 'ballot-feedback error';
       }
     }
