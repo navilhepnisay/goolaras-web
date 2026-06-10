@@ -2149,6 +2149,7 @@
       submitBtn.innerText = lang === 'en' ? 'SUBMITTING...' : (lang === 'tr' ? 'GÖNDERİLİYOR...' : '...');
 
       const championId = localStorage.getItem('predicted_champion') || '';
+      const safeChampionId = championId || 'not_selected';
 
       if (SUPABASE_URL.includes("YOUR_SUPABASE_URL") || !window.supabase) {
         setTimeout(() => {
