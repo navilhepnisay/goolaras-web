@@ -2707,8 +2707,9 @@
       submitBtn.innerText = lang === 'en' ? 'SUBMITTING...' : (lang === 'tr' ? 'GÖNDERİLİYOR...' : '...');
 
       // Build voting package
-      const favoriteId = activeFavoriteCountry;
-      const groupVotes = activeGroupPicks;
+      const favoriteId = activeFavoriteCountry || localStorage.getItem('predicted_champion') || 'not_selected';
+      const championId = localStorage.getItem('predicted_champion') || favoriteId || 'not_selected';
+      const groupVotes = activeGroupPicks || {};
 
       if (SUPABASE_URL.includes("YOUR_SUPABASE_URL") || !window.supabase) {
         setTimeout(() => {
@@ -2735,7 +2736,8 @@
           .insert([
             {
               email: email,
-              favorite_team: favoriteId,
+              favorite_country: favoriteId,
+              predicted_champion: championId,
               group_votes: groupVotes
             }
           ]);
